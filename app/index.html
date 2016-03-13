@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" >
+  <head>
+    <title>Angular Material - Starter App</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
+    <link rel="stylesheet" href="https://material.angularjs.org/1.1.0-rc1/docs.css"/>
+    <link rel="stylesheet" href="https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.0-rc1/angular-material.css"/>
+
+    <style type="text/css">
+        /**
+         * Hide when Angular is not yet loaded and initialized
+         */
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+          display: none !important;
+        }
+    </style>
+
+  </head>
+
+  <body ng-app="MatchMakr" layout="column" >
+    <md-toolbar>
+          <div class="md-toolbar-tools">
+            <md-button class="md-icon-button" aria-label="Settings">
+              <md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
+            </md-button>
+            <h2>
+              <span>MatchMakr</span>
+            </h2>
+            <span flex=""></span>
+            <md-button class="md-icon-button" aria-label="Favorite">
+              <md-icon md-svg-icon="img/icons/favorite.svg" style="color: greenyellow;"></md-icon>
+            </md-button>
+            <md-button class="md-icon-button" aria-label="More">
+              <md-icon md-svg-icon="img/icons/more_vert.svg"></md-icon>
+            </md-button>
+          </div>
+        </md-toolbar>
+    <div ng-controller="SkillsController as ctrl" layout="column" ng-cloak="" class="chipsdemoContactChips" ng-app="MyApp">
+      <md-chips ng-model="ctrl.selectedSkills" md-transform-chip="ctrl.transformChip($chip)"  md-on-add="ctrl.searchNeeds($chip)" md-require-match="true">
+        <md-autocomplete md-selected-item="ctrl.selectedItem" md-search-text="ctrl.searchText" md-items="item in ctrl.querySearch(ctrl.searchText)" md-item-text="item.name" placeholder="Search for a skills">
+          <span md-highlight-text="ctrl.searchText">
+            {{item.name}}
+          </span>
+        </md-autocomplete>
+        <md-chip-template>
+          <span>
+            <strong>{{$chip.name}}</strong>
+          </span>
+        </md-chip-template>
+      </md-chips>
+      <div ng-repeat="(key, need) in ctrl.needs">
+        <span>{{need._id}}</span>
+      </div>
+    </div>
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+    <script src="https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.0-rc1/angular-material.js"></script>
+    <script src="http://ngmaterial.assets.s3.amazonaws.com/svg-assets-cache.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+
+    <script>
+      var MatchMakr = angular.module('MatchMakr',['ngMaterial', 'ngMessages', 'material.svgAssetsCache']);
+    </script>
+    <script type="text/javascript" src="src/skills/skills.controller.js"></script>
+
+  </body>
+</html>
