@@ -54,7 +54,8 @@
           </span>
         </md-chip-template>
       </md-chips>
-      <div ng-repeat="(key, need) in ctrl.needs">
+      <md-progress-linear md-mode="query" ng-show="ctrl.isLoading"></md-progress-linear>
+      <div ng-repeat="(key, need) in ctrl.matchedProfiles">
         <span>{{need._id}}</span>
       </div>
     </div>

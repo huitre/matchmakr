@@ -14,6 +14,9 @@ angular.module('MatchMakr').controller('SkillsController',
     self.querySearch = querySearch;
     self.transformChip = transformChip;
     self.searchNeeds = searchNeeds;
+    self.isLoading = false;
+    self.matchedProfiles = [];
+    self.needsProfiles = [];
     /**
      * Search for contacts; use a random delay to simulate a remote call
      */
@@ -37,19 +40,21 @@ angular.module('MatchMakr').controller('SkillsController',
 
     function searchNeeds(chip) {
       var deferred = $q.defer();
-      console.log('http://192.99.12.85:3000/needs?skills=' + chip.name + '&embed');
-      $http.get('http://192.99.12.85:3000/needs?skills=' + chip.name + '&embed').then(function(needs) {
-        if (!needs.data.total)
-          return deferred.reject(needs);
-        self.needs = needs.data._embedded.needs;
-        console.log(self.needs);
-        /*
-        var calls = needs.data._links.proposals.map(function(link) {
-          console.log(link);
-          return $http.get(link.href);
+      self.isLoading = true;
+      $http.get('http://192.99.12.85:3000/needs?skills=' + chip.name + '&embed&type=proposals').then(function(results) {
+        var data = results.data._links;
+
+        var proposals = data.proposals && data.proposals.map(function(link) {
+          return $http.get(link.href).then(function(results) {
+            return profileData = results.data
+
+          });
         });
-        $q.all(calls).then(function(results) {
-          console.log(results);
+        $q.all(proposals).then(function(results) {
+          debugger;
+          console.log(results)
+          self.isLoading = false;
+          self.needsProfiles = results.data;
           deferred.resolve(results);
         },
         function(errors) {
@@ -58,7 +63,6 @@ angular.module('MatchMakr').controller('SkillsController',
         function(updates) {
           deferred.update(updates);
         });
-        */
       });
     }
 
